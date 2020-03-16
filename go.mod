@@ -1,4 +1,4 @@
-module github.com/tcurdt/gocrypto
+module github.com/tcurdt/go-crypto-helper
 
 go 1.13
 
