@@ -12,10 +12,6 @@ import (
 	"github.com/gtank/cryptopasta"
 )
 
-// https://github.com/pd/apiauth/blob/master/apiauth.go
-// https://github.com/99designs/httpsignatures-go
-// https://github.com/manifoldco/go-signature
-
 type SigningKeyPrivate = ecdsa.PrivateKey
 type SigningKeyPublic = ecdsa.PublicKey
 

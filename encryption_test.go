@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// go test -v ./crypto -run TestEncryptionAndDecryption
+// go test -v -run TestEncryptionAndDecryption
 func TestEncryptionAndDecryption(t *testing.T) {
 
 	key := NewEncryptionKey()

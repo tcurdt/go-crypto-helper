@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// go test -v ./crypto -run TestSignAndVerify
+// go test -v -run TestSignAndVerify
 func TestSignAndVerify(t *testing.T) {
 
 	req, _ := http.NewRequest("GET", "http://example.com", nil)
@@ -27,6 +27,7 @@ func TestSignAndVerify(t *testing.T) {
 
 }
 
+// go test -v -run TestSignAndVerify
 func TestKeysChange(t *testing.T) {
 
 	prv1, err := NewSigningKeyPrivate()

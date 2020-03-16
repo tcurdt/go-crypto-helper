@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// go test -v ./crypto -run TestEncodeAndDecodeSigningKey
+// go test -v -run TestEncodeAndDecodeSigningKey
 func TestEncodeAndDecodeSigningKey(t *testing.T) {
 
 	req, _ := http.NewRequest("GET", "http://example.com", nil)
