@@ -26,3 +26,18 @@ func TestSignAndVerify(t *testing.T) {
 	require.Nil(t, err)
 
 }
+
+func TestKeysChange(t *testing.T) {
+
+	prv1, err := NewSigningKeyPrivate()
+	require.Nil(t, err)
+	prv1Str, err := SigningKeyPrivateEncode(prv1)
+	require.Nil(t, err)
+
+	prv2, err := NewSigningKeyPrivate()
+	require.Nil(t, err)
+	prv2Str, err := SigningKeyPrivateEncode(prv2)
+	require.Nil(t, err)
+
+	require.NotEqual(t, prv1Str, prv2Str)
+}
