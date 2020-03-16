@@ -1,3 +1,5 @@
+include .project
+
 MAKEFLAGS += --silent
 
 .PHONY:
