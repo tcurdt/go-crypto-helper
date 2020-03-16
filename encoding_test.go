@@ -14,8 +14,9 @@ func TestEncodeAndDecodeSigningKey(t *testing.T) {
 	req, _ := http.NewRequest("GET", "http://example.com", nil)
 	req.Header.Set("Date", time.Now().UTC().Format(time.RFC1123))
 
-	prv, pub, err := NewSigningPair()
+	prv, err := NewSigningKeyPrivate()
 	require.Nil(t, err)
+	pub := &prv.PublicKey
 
 	body := []byte{}
 	err = Sign(req, body, prv)

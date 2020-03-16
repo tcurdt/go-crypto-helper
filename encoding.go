@@ -1,9 +1,9 @@
 package crypto
 
 import (
+	"crypto/x509"
 	"encoding/base64"
-
-	"github.com/gtank/cryptopasta"
+	"errors"
 )
 
 // Encode ...
@@ -38,43 +38,57 @@ func EncryptionKeyDecode(key string) (*EncryptionKey, error) {
 // SigningKeyPrivateEncode ...
 func SigningKeyPrivateEncode(key *SigningKeyPrivate) (string, error) {
 
-	b, err := cryptopasta.EncodePrivateKey(key)
+	der, err := x509.MarshalECPrivateKey(key)
 	if err != nil {
 		return "", err
 	}
 
-	return string(b), nil
+	return Encode(der), nil
 }
 
 // SigningKeyPrivateDecode ...
 func SigningKeyPrivateDecode(key string) (*SigningKeyPrivate, error) {
 
-	k, err := cryptopasta.DecodePrivateKey([]byte(key))
+	bytes, err := Decode(key)
 	if err != nil {
 		return nil, err
 	}
 
+	k, err := x509.ParseECPrivateKey(bytes)
+	if err != nil {
+		return nil, err
+	}
 	return k, nil
 }
 
 // SigningKeyPublicEncode ...
 func SigningKeyPublicEncode(key *SigningKeyPublic) (string, error) {
 
-	b, err := cryptopasta.EncodePublicKey(key)
+	der, err := x509.MarshalPKIXPublicKey(key)
 	if err != nil {
 		return "", err
 	}
 
-	return string(b), nil
+	return Encode(der), nil
 }
 
 // SigningKeyPublicDecode ...
 func SigningKeyPublicDecode(key string) (*SigningKeyPublic, error) {
 
-	k, err := cryptopasta.DecodePublicKey([]byte(key))
+	bytes, err := Decode(key)
 	if err != nil {
 		return nil, err
 	}
 
-	return k, nil
+	k, err := x509.ParsePKIXPublicKey(bytes)
+	if err != nil {
+		return nil, err
+	}
+
+	pub, ok := k.(*SigningKeyPublic)
+	if !ok {
+		return nil, errors.New("data was not a public key")
+	}
+
+	return pub, nil
 }

@@ -24,13 +24,9 @@ const (
 	headerSignedHeaders = "x-signed-headers"
 )
 
-// NewSigningPair ...
-func NewSigningPair() (*SigningKeyPrivate, *SigningKeyPublic, error) {
-	key, err := cryptopasta.NewSigningKey()
-	if err != nil {
-		return nil, nil, err
-	}
-	return key, &key.PublicKey, nil
+// NewSigningKeyPrivate ...
+func NewSigningKeyPrivate() (*SigningKeyPrivate, error) {
+	return cryptopasta.NewSigningKey()
 }
 
 // Sign ...
