@@ -3,7 +3,7 @@ package crypto
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // go test -v ./crypto -run TestEncryptionAndDecryption
@@ -15,10 +15,10 @@ func TestEncryptionAndDecryption(t *testing.T) {
 	}
 
 	ciphertext, err := Encrypt(plaintext, key)
-	assert.Nil(t, err)
+	require.Nil(t, err)
 
 	decrypted, err := Decrypt(ciphertext, key)
-	assert.Nil(t, err)
+	require.Nil(t, err)
 
-	assert.Equal(t, plaintext, decrypted)
+	require.Equal(t, plaintext, decrypted)
 }

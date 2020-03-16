@@ -16,18 +16,25 @@ import (
 // https://github.com/99designs/httpsignatures-go
 // https://github.com/manifoldco/go-signature
 
+type SigningKeyPrivate = ecdsa.PrivateKey
+type SigningKeyPublic = ecdsa.PublicKey
+
 const (
 	headerSignature     = "x-signature"
 	headerSignedHeaders = "x-signed-headers"
 )
 
-// NewSigningKey ...
-func NewSigningKey() (*ecdsa.PrivateKey, error) {
-	return cryptopasta.NewSigningKey()
+// NewSigningPair ...
+func NewSigningPair() (*SigningKeyPrivate, *SigningKeyPublic, error) {
+	key, err := cryptopasta.NewSigningKey()
+	if err != nil {
+		return nil, nil, err
+	}
+	return key, &key.PublicKey, nil
 }
 
 // Sign ...
-func Sign(req *http.Request, body []byte, privKey *ecdsa.PrivateKey) error {
+func Sign(req *http.Request, body []byte, privKey *SigningKeyPrivate) error {
 
 	message, err := Canonize(req, bytes.NewBuffer(body))
 	if err != nil {
@@ -47,7 +54,7 @@ func Sign(req *http.Request, body []byte, privKey *ecdsa.PrivateKey) error {
 }
 
 // Verify ...
-func Verify(req *http.Request, body []byte, pubKey *ecdsa.PublicKey) error {
+func Verify(req *http.Request, body []byte, pubKey *SigningKeyPublic) error {
 
 	message, err := Canonize(req, bytes.NewBuffer(body))
 	if err != nil {

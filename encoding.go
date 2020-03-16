@@ -2,6 +2,8 @@ package crypto
 
 import (
 	"encoding/base64"
+
+	"github.com/gtank/cryptopasta"
 )
 
 // Encode ...
@@ -31,4 +33,48 @@ func EncryptionKeyDecode(key string) (*EncryptionKey, error) {
 		ret[i] = bin[i]
 	}
 	return ret, nil
+}
+
+// SigningKeyPrivateEncode ...
+func SigningKeyPrivateEncode(key *SigningKeyPrivate) (string, error) {
+
+	b, err := cryptopasta.EncodePrivateKey(key)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+// SigningKeyPrivateDecode ...
+func SigningKeyPrivateDecode(key string) (*SigningKeyPrivate, error) {
+
+	k, err := cryptopasta.DecodePrivateKey([]byte(key))
+	if err != nil {
+		return nil, err
+	}
+
+	return k, nil
+}
+
+// SigningKeyPublicEncode ...
+func SigningKeyPublicEncode(key *SigningKeyPublic) (string, error) {
+
+	b, err := cryptopasta.EncodePublicKey(key)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+// SigningKeyPublicDecode ...
+func SigningKeyPublicDecode(key string) (*SigningKeyPublic, error) {
+
+	k, err := cryptopasta.DecodePublicKey([]byte(key))
+	if err != nil {
+		return nil, err
+	}
+
+	return k, nil
 }
